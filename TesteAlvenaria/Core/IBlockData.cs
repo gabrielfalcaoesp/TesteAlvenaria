@@ -1,15 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TesteAlvenaria.Teste; 
 
-namespace TesteAlvenaria.Core;
-
-internal interface IBlockData
+namespace TesteAlvenaria.Core
 {
-    int WallPosition { get; }
-    int Height { get; }
-    int Length { get; }
-    int Elevation { get; }
+    public interface IBlockData
+    {
+        int WallPosition { get; set; }
+        int Height { get; }
+        int Length { get; }
+        int Elevation { get; set; }
+    }
+
+    public class Block : IBlockData
+    {
+        public int WallPosition { get; set; }
+        public int Height { get; set; }
+        public int Length { get; set; }
+        public int Elevation { get; set; }
+
+        public Block(int wallPosition, int length)
+        {
+            WallPosition = wallPosition;
+            Length = length;
+            Height = 20;
+        }
+    }
+
+    public static class BlockFilter
+    {
+        public static List<Block> FilterValues(List<string> blocks)
+        {
+            List<Block> listBlocks = new List<Block>();
+
+            foreach (string blockString in blocks)
+            {
+                int wallPosition = DataProcessing.ExtrairValor(blockString, 3);
+                int length = DataProcessing.ExtrairValor(blockString, 1);
+
+
+                Block block = new Block(wallPosition, length);
+
+                listBlocks.Add(block);
+                
+            }
+
+            return listBlocks;
+        }
+    }
 }

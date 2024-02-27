@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 using TesteAlvenaria.Core;
 using TesteAlvenaria.Libs;
@@ -49,13 +52,45 @@ namespace TesteAlvenaria
             _dispatcher = Application.Current.Dispatcher;
             ChooseButton = new GenericCommand(obj => ChooseFile(), obj => !IsIndeterminate);
             ProcessButton = new GenericCommand(obj => ProcessFile(), obj => FilePath != string.Empty && !IsIndeterminate);
-            ShowFirstRowButton = new GenericCommand(obj => { ShowRow = 0; SelectedWall = null; }, obj => !IsIndeterminate);
+            ShowFirstRowButton = new GenericCommand(
+    obj =>
+    {
+        ShowRow = 0;
+        SelectedWall = null;
+        MainWindow mainWindow = new MainWindow();
+        mainWindow.DrawFirstRow();
+        
+    },
+    obj => !IsIndeterminate
+);
             ShowSecondRowButton = new GenericCommand(obj => { ShowRow = 20; SelectedWall = null; }, obj => !IsIndeterminate);
+
+            RectangleGeometry myRectangleGeometry = new RectangleGeometry();
+            myRectangleGeometry.Rect = new Rect(50, 50, 25, 25);
+
+
+            Canvas cnv_preview = new Canvas();
+            cnv_preview.Name = "cnv_preview";
+            cnv_preview.Margin = new System.Windows.Thickness(3);
+
+
+            Path myPath = new Path();
+            myPath.Fill = Brushes.LemonChiffon;
+            myPath.Stroke = Brushes.Black;
+            myPath.StrokeThickness = 1;
+            myPath.Data = myRectangleGeometry;
+
+            cnv_preview.Children.Add(myPath);
+
+
         }
+
+
 
         #endregion
 
         #region Functions
+
 
         private void ChooseFile()
         {
@@ -96,4 +131,5 @@ namespace TesteAlvenaria
 
         #endregion
     }
+
 }

@@ -84,11 +84,7 @@ namespace TesteAlvenaria
                 if (selectedWall == null)
                     return;
                 SetScaleElevation(selectedWall);
-                selectedWall.Blocks.ForEach(bl =>
-                {
-                    bl.Elevation += 20;
-                    DrawBlockElevation(bl);
-                });
+                selectedWall.Blocks.ForEach(bl => DrawBlockElevation(bl));
                 selectedWall.Openings.ForEach(op => DrawOpeningElevation(op));
             }
             

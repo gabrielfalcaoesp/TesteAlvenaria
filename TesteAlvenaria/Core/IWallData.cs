@@ -59,12 +59,12 @@ public static class WallFilter
             
             int pointX = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 2));
             int angle = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 4));
-            int pointY = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 3));
-            int length = parede.Value.Max(s => DataProcessing.ExtrairValor(s, 3));
+            int pointY = 0;
+            int length = parede.Value.Max(s => DataProcessing.ExtrairValor(s, 3)+ parede.Value.Max(s => DataProcessing.ExtrairValor(s, 1)));
 
             if(angle == 00)
             {
-                pointX = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 3));
+                pointX = 0;
                 pointY = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 2));
                 Console.WriteLine(pointY);
             }

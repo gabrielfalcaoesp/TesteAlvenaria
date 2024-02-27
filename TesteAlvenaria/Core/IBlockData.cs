@@ -9,7 +9,7 @@ namespace TesteAlvenaria.Core
         int WallPosition { get; set; }
         int Height { get; }
         int Length { get; }
-        int Elevation { get; set; }
+        int Elevation { get; }
     }
 
     public class Block : IBlockData
@@ -24,6 +24,7 @@ namespace TesteAlvenaria.Core
             WallPosition = wallPosition;
             Length = length;
             Height = 20;
+            Elevation = 0;
         }
     }
 

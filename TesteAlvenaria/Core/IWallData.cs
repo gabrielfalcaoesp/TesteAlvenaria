@@ -52,6 +52,7 @@ public static class WallFilter
         List<Wall> listWall = new List<Wall>();
         int minValueBlock = 0;
         int maxValueBlock = 0;
+        BlockFilter.IncrementWallPosition(blocks);
         foreach (KeyValuePair<int, List<string>> parede in paredes)
         {
             
@@ -69,12 +70,24 @@ public static class WallFilter
                 Console.WriteLine(pointY);
             }
 
+
             maxValueBlock = maxValueBlock + parede.Value.Count;
-
+            
             List<Block> listBlocks = blocks.GetRange(minValueBlock, maxValueBlock - minValueBlock);
-            Console.WriteLine(listBlocks);
-            minValueBlock = maxValueBlock;
+            
 
+            for (int multiplicador = 1; multiplicador <=12; multiplicador++)
+            {
+                int tamanho = 44;
+                int range = tamanho * multiplicador;
+                List<Block> novaSublista = blocks.GetRange(range, (maxValueBlock + range) - (minValueBlock + range));
+                listBlocks.AddRange(novaSublista);
+                Console.WriteLine(listBlocks);
+            }
+            
+
+
+            minValueBlock = maxValueBlock;
 
             List<Opening> openings = new List<Opening>();
             for (int i = 0; i < listWindows.Count; i++)

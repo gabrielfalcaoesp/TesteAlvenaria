@@ -136,7 +136,7 @@ namespace TesteAlvenaria
             SetScaleFirstRow();
             var rects = new List<RectGeometry>();
             _model.Walls.ForEach(w => rects.Add(new RectGeometry(w.PointX, w.PointY, w.Length, 20, w.Angle)));
-            //rects.ForEach(r => DrawRect(r, 1));
+            rects.ForEach(r => DrawRect(r, 1));
             foreach (var wall in _model.Walls)
             {
                 var blocks = wall.Blocks.FindAll(bl => bl.Elevation == _model.ShowRow);

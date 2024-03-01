@@ -84,22 +84,22 @@ namespace TesteAlvenaria.Core
             
         }
 
-        public static void IncrementWallPositionImpar(List<Block> listBlocksElevation)
+        public static void IncrementWallPosition(List<Block> newList)
         {
-            foreach (Block block in listBlocksElevation)
+            for (int i = 0; i < newList.Count; i++)
             {
-                
+                Block block = newList[i];
                 if (block.Elevation % 20 == 0 && (block.Elevation / 20) % 2 == 1)
                 {
-                    block.WallPosition += 20;
+                    newList[i].WallPosition += 20;
                 }
             }
         }
-        public static void IncrementWallPosition(List<Block> listBlocksElevation)
+
+        public static void IncrementWallPositionPair(List<Block> listBlocksElevation)
         {
             foreach (Block block in listBlocksElevation)
             {
-
                 if (block.Elevation % 20 == 0 && (block.Elevation / 20) % 2 == 1)
                 {
                     block.WallPosition -= 20;

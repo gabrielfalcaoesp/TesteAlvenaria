@@ -52,18 +52,16 @@ public static class WallFilter
         List<Wall> listWall = new List<Wall>();
         int minValueBlock = 0;
         int maxValueBlock = 0;
-        BlockFilter.IncrementWallPosition(blocks);
+        //BlockFilter.IncrementWallPosition(blocks);
         foreach (KeyValuePair<int, List<string>> parede in paredes)
         {
-            
             string name = "parede " + parede.Key;
-            
             int pointX = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 2));
             int angle = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 4));
             int pointY = 0;
-            int length = parede.Value.Max(s => DataProcessing.ExtrairValor(s, 3)+ parede.Value.Max(s => DataProcessing.ExtrairValor(s, 1)));
+            int length = parede.Value.Max(s => DataProcessing.ExtrairValor(s, 3) + parede.Value.Max(s => DataProcessing.ExtrairValor(s, 1)));
 
-            if(angle == 00)
+            if (angle == 00)
             {
                 pointX = 0;
                 pointY = parede.Value.Min(s => DataProcessing.ExtrairValor(s, 2));
@@ -72,21 +70,19 @@ public static class WallFilter
 
 
             maxValueBlock = maxValueBlock + parede.Value.Count;
-            
             List<Block> listBlocks = blocks.GetRange(minValueBlock, maxValueBlock - minValueBlock);
-            
 
-            for (int multiplicador = 1; multiplicador <=12; multiplicador++)
+            List<Block> newList = CreateBlocksElevation(listBlocks);
+            listBlocks.AddRange(newList);
+            if(parede.Key % 2 != 0)
             {
-                int tamanho = 44;
-                int range = tamanho * multiplicador;
-                List<Block> novaSublista = blocks.GetRange(range, (maxValueBlock + range) - (minValueBlock + range));
-                listBlocks.AddRange(novaSublista);
-                Console.WriteLine(listBlocks);
+                BlockFilter.IncrementWallPosition(listBlocks);
+            }
+            else
+            {
+                BlockFilter.IncrementWallPositionPair(listBlocks);
             }
             
-
-
             minValueBlock = maxValueBlock;
 
             List<Opening> openings = new List<Opening>();
@@ -110,10 +106,31 @@ public static class WallFilter
             Wall wall = new Wall(name, pointX, pointY, angle, length, listBlocks, openings);
             listWall.Add(wall);
 
-            
+
         }
 
         return listWall;
+    }
+
+    public static List<Block> CreateBlocksElevation(List<Block> listBlocksElevation)
+    {
+        List<Block> updatedBlocks = new List<Block>();
+
+        foreach (Block block in listBlocksElevation)
+        {
+            for (int i = 0; i < 13; i++)
+            {
+                Block updatedBlock = new Block(
+                    wallPosition: block.WallPosition,
+                    length: block.Length,
+                    elevation: block.Elevation + 20 * i 
+                );
+
+                updatedBlocks.Add(updatedBlock);
+            }
+        }
+
+        return updatedBlocks;
     }
 
 

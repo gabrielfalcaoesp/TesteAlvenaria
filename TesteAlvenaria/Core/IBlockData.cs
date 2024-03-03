@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Documents;
 using TesteAlvenaria.Teste; 
 
 namespace TesteAlvenaria.Core
@@ -84,14 +86,14 @@ namespace TesteAlvenaria.Core
             
         }
 
-        public static void IncrementWallPosition(List<Block> newList)
+        public static void IncrementWallPosition(List<Block> wallPositionIncremented)
         {
-            for (int i = 0; i < newList.Count; i++)
+            for (int i = 0; i < wallPositionIncremented.Count; i++)
             {
-                Block block = newList[i];
+                Block block = wallPositionIncremented[i];
                 if (block.Elevation % 20 == 0 && (block.Elevation / 20) % 2 == 1)
                 {
-                    newList[i].WallPosition += 20;
+                    wallPositionIncremented[i].WallPosition += 20;
                 }
             }
         }
@@ -105,6 +107,42 @@ namespace TesteAlvenaria.Core
                     block.WallPosition -= 20;
                 }
             }
+        }
+
+        public static List<Block> RemoveLastBlock(List<Block> listBlocks)
+        {
+            Block biggerWallPosition = listBlocks.MaxBy(b => b.WallPosition);
+            List<Block> listBiggerWallPosition = listBlocks
+            .Where(b => b.WallPosition == biggerWallPosition.WallPosition)
+            .ToList();
+
+            Console.WriteLine(listBiggerWallPosition);
+
+            return listBiggerWallPosition;
+        }
+
+        public static List<Block> AddLastBlock(List<Block> listBlocks)
+        {
+            Block biggerWallPosition = listBlocks.MaxBy(b => b.WallPosition);
+
+            List<Block> listBiggerWallPosition = listBlocks
+                .Where(b => b.WallPosition == biggerWallPosition.WallPosition-(b.Length/2))
+                .ToList();
+
+            List<Block> newListBiggerWallPosition = new List<Block>();
+
+            foreach (Block block in listBiggerWallPosition)
+            {
+                Block lastBlock = new Block(
+                    wallPosition: block.WallPosition + block.Length,
+                    length: block.Length,
+                    elevation: block.Elevation
+                );
+
+                newListBiggerWallPosition.Add(lastBlock);
+            }
+
+            return newListBiggerWallPosition;
         }
 
 

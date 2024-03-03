@@ -52,7 +52,6 @@ public static class WallFilter
         List<Wall> listWall = new List<Wall>();
         int minValueBlock = 0;
         int maxValueBlock = 0;
-        //BlockFilter.IncrementWallPosition(blocks);
         foreach (KeyValuePair<int, List<string>> parede in paredes)
         {
             string name = "parede " + parede.Key;
@@ -77,12 +76,17 @@ public static class WallFilter
             if(parede.Key % 2 != 0)
             {
                 BlockFilter.IncrementWallPosition(listBlocks);
+                List<Block> removedBlocks = BlockFilter.RemoveLastBlock(listBlocks);
+                listBlocks.RemoveAll(b => removedBlocks.Contains(b));
             }
             else
             {
                 BlockFilter.IncrementWallPositionPair(listBlocks);
+                List<Block> addBlocks = BlockFilter.AddLastBlock(listBlocks);
+                listBlocks.AddRange(addBlocks);
             }
             
+
             minValueBlock = maxValueBlock;
 
             List<Opening> openings = new List<Opening>();

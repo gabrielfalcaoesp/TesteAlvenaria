@@ -145,6 +145,51 @@ namespace TesteAlvenaria.Core
             return newListBiggerWallPosition;
         }
 
+        public static List<Block> ExcludeBlocksOfOpening(List<Opening> listOpenings, List<Block> listBlocks)
+            {
+                List<Block>  blocksShouldExcluded = new List<Block>();
+
+                foreach (Opening opening in listOpenings)
+                {
+                    int rangeX = opening.WallPosition + opening.Length;
+                    int rangeY = opening.Height + opening.Elevation;
+
+                    foreach(Block block in listBlocks)
+                    {
+                        if(block.WallPosition >= opening.WallPosition && block.WallPosition + block.Length <= rangeX)
+                        {
+                            if(block.Elevation >= opening.Elevation && block.Elevation < rangeY) 
+                            {
+                                blocksShouldExcluded.Add(block);
+                            }
+                        }
+
+                    if (block.WallPosition + block.Length > opening.WallPosition && block.WallPosition + block.Length <= rangeX)
+                    {
+                        if (block.Elevation >= opening.Elevation && block.Elevation < rangeY)
+                        {
+                            block.Length = block.Length / 2;
+                        }
+                    }
+
+                    if (block.WallPosition >= opening.WallPosition && block.WallPosition < rangeX)
+                    {
+                        if (block.Elevation >= opening.Elevation && block.Elevation < rangeY)
+                        {
+                            block.WallPosition += block.Length / 2;
+                            block.Length = block.Length / 2;
+                        }
+                    }
+
+
+
+                }
+
+            }
+
+                return blocksShouldExcluded;
+            }
+
 
 
     }

@@ -74,7 +74,7 @@ namespace TesteAlvenaria.Teste
             }
 
             
-            return WallFilter.FilterValues(listBlocks, paredes, listDoors, listWindows);
+            return WallFilter.FilterValues(listBlocks, paredes, listWindows, listDoors);
         }
 
         public static int ExtrairValor(string bloco, int valor)

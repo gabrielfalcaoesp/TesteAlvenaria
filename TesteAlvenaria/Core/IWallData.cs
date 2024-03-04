@@ -92,19 +92,22 @@ public static class WallFilter
             List<Opening> openings = new List<Opening>();
             for (int i = 0; i < listWindows.Count; i++)
             {
-                if (listWindows[i].WallPosition == pointX)
+                if (listWindows[i].Wall == pointY)
                 {
                     openings.Add(listWindows[i]);
                 }
             }
-
+            Console.WriteLine(openings);
             for (int i = 0; i < listDoors.Count; i++)
             {
-                if (listDoors[i].WallPosition == pointY)
+                if (listDoors[i].WallPosition == pointX)
                 {
                     openings.Add(listDoors[i]);
                 }
             }
+
+            List<Block> blocksShouldExcluded = BlockFilter.ExcludeBlocksOfOpening(openings, listBlocks);
+            listBlocks.RemoveAll(b => blocksShouldExcluded.Contains(b));
 
 
             Wall wall = new Wall(name, pointX, pointY, angle, length, listBlocks, openings);

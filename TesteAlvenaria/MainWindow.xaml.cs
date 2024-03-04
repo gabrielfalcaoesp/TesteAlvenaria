@@ -187,7 +187,7 @@ namespace TesteAlvenaria
             var w = cnv_preview.ActualWidth;
             var rects = new List<RectGeometry>();
             _model.Walls.ForEach(w => rects.Add(new RectGeometry(w.PointX, w.PointY, w.Length, 20, w.Angle)));
-
+            if (rects.Count == 0) return;
             _minX = rects.Min(r => r.GetMinX());
             var maxX = rects.Max(r => r.GetMaxX());
             var minY = rects.Min(r => r.GetMinY());

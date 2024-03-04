@@ -24,12 +24,15 @@ public class Opening : IOpeningData
     public int Length { get; set; }
     public int Elevation { get; set; }
 
-    public Opening(int wallPosition, int height, int length, int elevation)
+    public int Wall { get; set; }
+
+    public Opening(int wallPosition, int height, int length, int elevation, int wall)
     {
         WallPosition = wallPosition;
         Height = height;
         Length = length;
         Elevation = elevation;
+        Wall = wall;
     }
 }
 
@@ -41,7 +44,8 @@ public class Opening : IOpeningData
         int elevation = 0;
         foreach (string blockString in doors)
         {
-            int wallPosition = DataProcessing.ExtrairValor(blockString, 5);
+            int wall = DataProcessing.ExtrairValor(blockString, 5);
+            int wallPosition = DataProcessing.ExtrairValor(blockString, 4);
             int length = DataProcessing.ExtrairValor(blockString, 1);
             int height = DataProcessing.ExtrairValor(blockString, 2);
 
@@ -52,16 +56,18 @@ public class Opening : IOpeningData
 
             else
             {
+                wall = 0;
                 wallPosition = DataProcessing.ExtrairValor(blockString, 3);
                 elevation = 0;
             }
-            Opening opening = new Opening(wallPosition, height, length, elevation);
+            Opening opening = new Opening(wallPosition, height, length, elevation, wall);
 
             listOpening.Add(opening);
         }
 
         return listOpening;
     }
+
 }
 
     
